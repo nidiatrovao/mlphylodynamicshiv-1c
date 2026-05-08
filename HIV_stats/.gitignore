@@ -1,0 +1,19 @@
+# Patterns specific to HIV_stats/
+
+# macOS
+.DS_Store
+
+# RStudio / R session files
+.Rproj.user/
+.Rhistory
+.RData
+.Ruserdata
+
+# RStudio Preview / knit output of README
+README.html
+
+# Output directory created by scripts 03/04 if paths not updated
+stat_output/
+
+# Note: renv manages its own .gitignore inside renv/ — no entries needed here.
+# Tracked: renv.lock, renv/activate.R, renv/settings.json, .Rprofile
