@@ -22,8 +22,6 @@ dir.create("figures", showWarnings = FALSE)
 # ============================================================================
 # PART 1: TMRCA AND EVOLUTIONARY RATE ANALYSIS
 # ============================================================================
-
-cat("Loading TMRCA and evolutionary rate data...\n")
 tmrca_data <- read.csv("input_data/HIV_TMRCA_ER_by_method.csv")
 tmrca_data$Method <- as.factor(tmrca_data$Method)
 levels(tmrca_data$Method)[3] <- "treedater" # rename
@@ -206,7 +204,6 @@ print(er_summary)
 # Slowest to fastest: TreeTime, LSD, TempEst, treedater
 
 kw_er <- kruskal.test(ER ~ temporal_method, data = er_long)
-cat("\nKruskal-Wallis test:\n")
 print(kw_er)
 
 # Result: substantial ER differences across temporal methods (more pronounced than TMRCA)
@@ -836,8 +833,8 @@ print(intro_phylo_summary)
 kw_temporal_intro <- kruskal.test(n ~ dpt, data = intro_count)
 print(kw_temporal_intro)
 
+# Post-hoc Dunn test
 if (kw_temporal_intro$p.value < 0.05) {
-  cat("\nPost-hoc Dunn test:\n")
   dunn_temporal_intro <- dunn.test(
     intro_count$n,
     intro_count$dpt,
@@ -849,8 +846,8 @@ if (kw_temporal_intro$p.value < 0.05) {
 kw_phylo_intro <- kruskal.test(n ~ mlt, data = intro_count)
 print(kw_phylo_intro)
 
+# Post-hoc Dunn test
 if (kw_phylo_intro$p.value < 0.05) {
-  cat("\nPost-hoc Dunn test:\n")
   dunn_phylo_intro <- dunn.test(
     intro_count$n,
     intro_count$mlt,

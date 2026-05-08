@@ -98,8 +98,7 @@ pair_dataset_counts %>%
   count(n_datasets, name = "n_pairs") %>%
   arrange(desc(n_datasets)) %>%
   mutate(label = sprintf("  %2d/15 datasets: %d pairs", n_datasets, n_pairs)) %>%
-  pull(label) %>%
-  cat(sep = "\n")
+  pull(label)
 
 # Pairs per dataset (shows effect of subsample size)
 d_shared %>%
@@ -107,8 +106,7 @@ d_shared %>%
   count(dataset, name = "n_pairs") %>%
   arrange(dataset) %>%
   mutate(label = sprintf("  %s: %d pairs", dataset, n_pairs)) %>%
-  pull(label) %>%
-  cat(sep = "\n")
+  pull(label)
 
 # ============================================================================
 # 3. Descriptive statistics
@@ -285,8 +283,8 @@ mod_simple <- lmer(time ~ dpt * mlt + (1 | country_pair) + (1 | dataset),
   data = d_shared
 )
 
-# Singularity check
-cat(sprintf("  Singular: %s\n", isSingular(mod_simple)))
+# Convergence check
+isSingular(mod_simple)
 # Variance components
 print(VarCorr(mod_simple))
 
