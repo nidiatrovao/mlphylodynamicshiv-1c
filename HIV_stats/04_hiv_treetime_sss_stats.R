@@ -75,11 +75,6 @@ cat(sprintf(
 
 n_method_combos <- n_distinct(sss$temporal_phylo) # 16: 4 dpt x 4 mlt
 
-# complete_location_datasets <- sss %>%
-#   group_by(trait, dataset, location) %>%
-#   summarise(n_method_combos = n_distinct(temporal_phylo), .groups = "drop") %>%
-#   filter(n_method_combos == n_method_combos)
-
 complete_location_datasets <- sss %>%
   group_by(trait, dataset, location) %>%
   summarise(n_mc = n_distinct(temporal_phylo), .groups = "drop") %>%
