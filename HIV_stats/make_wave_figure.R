@@ -1,5 +1,5 @@
 # ============================================================================
-# Figure S20: Density plot to compare introduction timing across temporal methods
+# Figure S20: Density plot comparing introduction timing across temporal methods
 # HIV-1 Subtype C Phylodynamics Study
 # Amanda Perofsky
 # ============================================================================
@@ -7,7 +7,7 @@ library(dplyr)
 library(tidyr)
 library(ggplot2)
 
-# Load and filter data (same as main analysis)
+# Load and filter data (replicate main analysis)
 d <- read.delim("input_data/intro_count_time.tsv")
 d <- d %>%
   mutate(
@@ -28,7 +28,7 @@ d_shared <- d %>%
 
 range(d_shared$time)
 d_shared %>% arrange(time)
-100 * nrow(d_shared %>% filter(time<1920))/nrow(d_shared) # < 0.01% of estimated intros occur before 1920
+100 * nrow(d_shared %>% filter(time < 1920)) / nrow(d_shared) # < 0.01% of estimated intros occur before 1920
 
 p_density <- ggplot(d_shared, aes(x = time, color = dpt, fill = dpt)) +
   geom_density(alpha = 0.12, adjust = 1.5) +
@@ -37,9 +37,9 @@ p_density <- ggplot(d_shared, aes(x = time, color = dpt, fill = dpt)) +
   scale_x_continuous(
     breaks = seq(1920, 2020, 10),
     limits = c(1920, 2020),
-    expand = c(0.01,0.01)
+    expand = c(0.01, 0.01)
   ) +
-  scale_y_continuous(expand=c(0.001,0.001))+
+  scale_y_continuous(expand = c(0.001, 0.001)) +
   annotate("rect",
     xmin = 1975, xmax = 1985, ymin = -Inf, ymax = Inf,
     alpha = 0.08, fill = "gray40"

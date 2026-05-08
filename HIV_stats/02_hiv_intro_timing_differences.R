@@ -146,7 +146,7 @@ d_shared %>%
   print()
 
 # ============================================================================
-# 4. Primary mixed effects model
+# 4. Primary LMM
 # ============================================================================
 # Full model: (1|from) + (1|to) + (1|country_pair) + (1|dataset)
 # Separates variance due to origin country, destination country,
@@ -205,7 +205,7 @@ print(anova(mod_add, mod_full, refit = TRUE))
 # with a non-significant likelihood ratio test (p=0.18) and a lower AIC (214264 vs 214269)
 
 # ============================================================================
-# 5. Residual diagnostics for primary model
+# 5. Residual diagnostics for primary LMM
 # ============================================================================
 resid_vals <- residuals(mod_full)
 
@@ -334,8 +334,7 @@ print(anova_no_pair)
 # - Interaction: always non-significant (p~0.18)
 
 # ============================================================================
-# 6. Sensitivity check:
-# dataset_base (subsample size) vs dataset (replicate identity)
+# 6. Sensitivity check: dataset_base (sequence dataset size) vs dataset (supsampling replicate identity)
 # ============================================================================
 # The primary model uses the specific dataset (e.g., locrisk260.1) as a random effect,
 # accounting for replicate-specific variation. Here we check whether collapsing to
@@ -377,7 +376,7 @@ cat(sprintf("  dataset_base: %.4f (%.2f%%)\n", dataset_var_base, 100 * dataset_v
 # All fixed effect significance patterns and post-hoc contrasts are unchanged.
 
 # ============================================================================
-# 9. Sensitivity check: Rank-transformed mixed effect model
+# 9. Sensitivity check: Rank-transformed LMM
 # ============================================================================
 # Rank-transforming introduction times to eliminate distributional assumptions while
 # preserving the random effects structure.
@@ -397,6 +396,7 @@ print(anova_rank)
 
 # ============================================================================
 # 8. Sensitivity check: Kruskal-Wallis tests (ignore random effects)
+# Also in script 01
 # ============================================================================
 # By temporal method
 kw_dpt <- kruskal.test(time ~ dpt, data = d_shared)
@@ -410,11 +410,9 @@ print(kw_mlt)
 # temporal method has bigger effect on introduction count estimates than phylogenetic method
 
 # ============================================================================
-# 9. Diving in to temporal method effects on intro counts
-# ============================================================================
-# Do temporal methods diverge equally across all time periods, or is the effect
+# 9. Do temporal methods diverge equally across all time periods, or is the effect
 # concentrated in early vs recent introduction events?
-# ----------------------------------------------------------------------------
+# ============================================================================
 
 d_shared$period <- cut(d_shared$time,
   breaks = c(-Inf, 1980, 2000, Inf),
@@ -509,7 +507,7 @@ print(chi_result)
 # dispersal) depends on the temporal dating method used.
 
 # ============================================================================
-# 10. Per-pair (route specific) differences across methods
+# 10. Per-country pair (route specific) differences across methods
 # ============================================================================
 # Per-pair temporal method differences
 # Median introduction time difference per pair:

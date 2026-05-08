@@ -1,12 +1,12 @@
 # Statistical benchmarking analyses comparing phylogenetic x temporal dating method combinations (`HIV_stats/`)
 
-This folder contains the R code and input data for statistical analyses comparing 16 method combinations (4 phylogenetic ML methods × 4 temporal dating methods) across subsampled HIV-1 Subtype C sequence datasets. Maintained by Amanda Perofsky (a.perofsky@northeastern.edu).
+This folder contains the R code and input data for statistical analyses comparing 16 method combinations (4 ML tree methods × 4 temporal dating methods) across subsampled HIV-1 Subtype C sequence datasets. Maintained by Amanda Perofsky (a.perofsky@northeastern.edu).
 
 ## Summary
 
 This folder covers statistical benchmarking of pre-computed phylogenetic and phylogeographic outputs. The upstream pipelines (sequence curation, alignment, subsampling, ML tree inference, temporal dating, TreeTime mugration, StrainHub centrality) live elsewhere in this repository.
 
-- Phylogenetic maximum likelihood methods: FastTree, IQ-TREE, PhyML, RAxML-NG
+- Maximum likelihood (ML) tree methods: FastTree, IQ-TREE, PhyML, RAxML-NG
 - Temporal dating methods: LSD, TempEst, treedater, TreeTime
 
 Specifically, this folder produces:
@@ -57,14 +57,14 @@ Packages used by the scripts (all pinned in `renv.lock`):
 
 ## Input data
 
-All files in `input_data/` are pre-computed outputs from the upstream phylodynamic pipeline. Files are aggregated across 15 subsampled datasets (5 subsample sizes × 3 replicates: `locrisk260.{1,2,3}`, `locrisk325.{1,2,3}`, ..., `locrisk574.{1,2,3}`) and 16 method combinations (4 phylogenetic × 4 temporal dating).
+All files in `input_data/` are pre-computed outputs from the upstream phylodynamic pipeline. Files are aggregated across 15 subsampled datasets (5 subsample sizes × 3 replicates: `locrisk260.{1,2,3}`, `locrisk325.{1,2,3}`, ..., `locrisk574.{1,2,3}`) and 16 method combinations (4 ML tree × 4 temporal dating).
 
 | File | Description | Used by |
 |---|---|---|
 | `HIV_TMRCA_ER_by_method.csv` | TMRCA (date) and evolutionary rate (subs/site/year) per dataset × method combination. | `01` |
-| `intro_count.tsv` | Per-country pair introduction counts: `from`, `to` (ISO-2 country codes), `dataset`, `n` (count), `dpt` (temporal method), `mlt` (phylogenetic ML method). | `01` |
+| `intro_count.tsv` | Per-country pair introduction counts: `from`, `to` (ISO-2 country codes), `dataset`, `n` (count), `dpt` (temporal method), `mlt` (ML tree method). | `01` |
 | `intro_count_time.tsv` | Estimated introduction events (decimal year) for each `from→to` country pair × dataset × method combination. | `02`, `make_wave_figure.R` |
-| `strainhub/All_strainhub_metrics_*.csv` | StrainHub network centrality metrics (Degree, In-/Out-degree, Betweenness, Closeness, Source-Hub Ratio) per Metastate × dataset × phylogenetic method. Resolutions: continent, region, country, risk4–risk6. | `03` |
+| `strainhub/All_strainhub_metrics_*.csv` | StrainHub network centrality metrics (Degree, In-/Out-degree, Betweenness, Closeness, Source-Hub Ratio) per Metastate × dataset × phylo method. Resolutions: continent, region, country, risk4–risk6. | `03` |
 | `All_treetime_metrics_SSS.tsv` | TreeTime Source-Sink Scores per location: `Export`, `Import`, `SSS = (Export − Import) / (Export + Import)`. Resolutions: continent, region, country, risk4–risk6. | `04` |
 
 ### Notes:
@@ -86,15 +86,15 @@ Non-parametric tests (Kruskal–Wallis, Dunn's post-hoc comparisons, Scheirer–
 
 **Inputs:** `input_data/HIV_TMRCA_ER_by_method.csv`, `input_data/intro_count.tsv`
 
-**Outputs (`figures/`):** `manuscript_fig_s18.{pdf,png}` (composite phylogenetic x temporal method interaction figure → manuscript **Fig S18**), `manuscript_fig_s19.{pdf,png}` (composite intro count CV heatmap figure → manuscript **Fig S19**)
+**Outputs (`figures/`):** `manuscript_fig_s18.{pdf,png}` (composite ML tree x temporal dating method interaction figure → manuscript **Fig S18**), `manuscript_fig_s19.{pdf,png}` (composite intro count CV heatmap figure → manuscript **Fig S19**)
 
 **Console output:** Kruskal–Wallis statistics, Dunn's post-hoc comparisons, Scheirer–Ray–Hare interaction tests, descriptive summaries.
 
 ### `02_hiv_intro_timing_differences.R` — Linear mixed-effects models of introduction timing estimates
 
-Linear mixed-effects models estimating the effects of phylogenetic x temporal method choice on inferred introduction timing:
+Linear mixed-effects models estimating the effects of phylo x temporal method choice on inferred introduction timing:
 
-- **Fixed effects:** temporal dating method (`dpt`), phylogenetic ML method (`mlt`), and their interaction
+- **Fixed effects:** temporal dating method (`dpt`), ML tree method (`mlt`), and their interaction
 - **Random effects:** origin country, destination country, country pair, dataset
 - Includes sensitivity analyses with alternative random effects structures (e.g., simplifying random effects, collapsing replicate-level random effects to dataset size level)
 
@@ -104,7 +104,7 @@ Linear mixed-effects models estimating the effects of phylogenetic x temporal me
 
 ### `03_hiv_strainhub_stats.R` — StrainHub concordance analysis
 
-Kendall's coefficient of concordance (W) testing whether StrainHub centrality rankings are stable across 4 phylogenetic ML methods, computed for each centrality metric × resolution level (continent / region / country / risk4 / risk5 / risk6).
+Kendall's coefficient of concordance (W) testing whether StrainHub centrality rankings are stable across 4 ML tree methods, computed for each centrality metric × resolution level (continent / region / country / risk4 / risk5 / risk6).
 
 **Inputs:** `input_data/strainhub/All_strainhub_metrics_*.csv` (six files)
 

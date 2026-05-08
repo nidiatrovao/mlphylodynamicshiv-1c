@@ -1,5 +1,5 @@
 # ============================================================================
-# Differences in TMRCA, ER, and introduction counts across phylo and temporal methods
+# Differences in TMRCA, ER, and introduction counts across 16 phylogenetic and temporal methods
 # HIV-1 Subtype C Phylodynamics Study
 # Amanda Perofsky
 # ============================================================================
@@ -184,7 +184,7 @@ print(eta_tmrca)
 # 18-year spread in TMRCA is driven by temporal signal methods, not phylogenetic methods
 
 # ------------------------------------------
-# Analysis 3: Compare temporal methods for Evolutionary Rate
+# Analysis 3: Compare temporal methods for Evolutionary Rate (ER)
 # ------------------------------------------
 
 er_summary <- er_long %>%
@@ -226,7 +226,7 @@ print(eta_er)
 # Result: temporal method has larger effect size for ER than for TMRCA
 
 # ------------------------------------------
-# Analysis 4: Compare phylogenetic methods for Evolutionary Rate
+# Analysis 4: Compare phylogenetic methods for Evolutionary Rate (ER)
 # ------------------------------------------
 
 er_phylo_summary <- er_long %>%
@@ -272,7 +272,7 @@ print(eta_er)
 # - For ER, IQ-TREE/PhyML/RAxML-NG are interchangeable
 
 # ------------------------------------------
-# Analysis 5: Two-way comparisons (Temporal × Phylogenetic methods)
+# Analysis 5: Two-way comparisons for TMRCA and ER (temporal × phylo method)
 # ------------------------------------------
 
 # Two-way analysis for TMRCA
@@ -543,7 +543,7 @@ p_heatmap_er
 # Can choose phylogenetic method based on other criteria (speed, accuracy) without worrying if it will affect the temporal estimates
 
 # ------------------------------------------
-# Analysis 6: Subsampling Strategy Consistency for TMRCA and ER
+# Analysis 6: Subsampling strategy consistency (CV) for TMRCA and ER
 # ------------------------------------------
 
 # TMRCA:
@@ -726,7 +726,7 @@ cat(
 )
 
 # ------------------------------------------
-# Analysis 7: Introduction Count Distribution
+# Analysis 7: Introduction count distribution
 # ------------------------------------------
 
 # Overall summary statistics
@@ -803,7 +803,7 @@ if (variance_mean_ratio > 1.5) {
 # Recommendation: Use non-parametric tests, which don't make assumptions about the underlying distribution
 
 # ------------------------------------------
-# Analysis 8: Method Comparison for Introduction Counts
+# Analysis 8: Compare counts across temporal and phylo methods
 # ------------------------------------------
 
 # Intro count summary by temporal method
@@ -864,7 +864,7 @@ if (kw_phylo_intro$p.value < 0.05) {
 # - Conclusions about viral dispersal patterns are method-independent
 
 # ------------------------------------------
-# Analysis 9: Introduction Counts by Subsampling strategy
+# Analysis 9: Introduction counts by subsampling strategy
 # ------------------------------------------
 
 # Replicates grouped together by base dataset
@@ -924,7 +924,7 @@ print(intro_cv_summary)
 # Conclusion: locrisk260 provides the most reproducible estimates, but it may underestimate the total number of introductions compared to larger datasets
 
 # ------------------------------------------
-# Analysis 10: Two-way Analysis for Introduction Counts
+# Analysis 10: Two-way comparisons for intro counts (temporal × phylo method)
 # ------------------------------------------
 intro_combination_summary <- intro_count %>%
   mutate(combination = paste(dpt, mlt, sep = "_")) %>%
@@ -971,7 +971,7 @@ p_interaction <- intro_srh["dpt:mlt", "p.value"]
 # Take Home: confirms that introduction counts are robust across all method combinations
 
 # ------------------------------------------
-# Analysis 11: Subsampling Strategy Consistency for Introduction Counts
+# Analysis 11: Subsampling strategy consistency (CV) for intro counts
 # ------------------------------------------
 
 # Consistency by method combination (across replicates)

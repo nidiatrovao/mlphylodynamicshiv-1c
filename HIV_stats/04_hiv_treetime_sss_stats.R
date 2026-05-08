@@ -6,7 +6,7 @@
 # Tests whether source-sink rankings are robust across:
 #   (1) ML tree methods (FastTree, IQ-TREE, PhyML, RAxML-NG)
 #   (2) Temporal dating methods (LSD, TempEst, TreeTime, treedater)
-#   (3) Subsampled datasets (locrisk260 – locrisk574)
+#   (3) Subsampled datasets (locrisk260 to locrisk574)
 #
 # Approach: Kendall's W concordance coefficient
 #   Do method combinations / datasets produce the same rankings of
